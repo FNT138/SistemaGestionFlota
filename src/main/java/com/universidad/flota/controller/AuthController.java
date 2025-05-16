@@ -1,6 +1,6 @@
 package com.universidad.flota.controller;
 
-import com.universidad.flota.domain.Usuario;
+
 import com.universidad.flota.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +15,6 @@ public class AuthController {
     public ResponseEntity<?> login(@RequestParam String email, @RequestParam String password){
         return usuarioService.login(email, password)
                 .map(u -> ResponseEntity.ok(u))
-                .orElse(ResponseEntity.status(401).body("Credenciales Invalidas"));
+                .orElse(ResponseEntity.status(401).body(null));
     }
 }

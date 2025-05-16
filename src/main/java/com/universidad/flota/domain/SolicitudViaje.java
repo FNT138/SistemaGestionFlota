@@ -1,12 +1,13 @@
 package com.universidad.flota.domain;
 
-
 import lombok.*;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@Data
 @Entity
 @Table(name = "solicitudes_viaje")
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -37,9 +38,17 @@ public class SolicitudViaje {
     @Column(nullable = false)
     private EstadoSolicitud estado;
 
+    //public void setEstado(EstadoSolicitud estado) {
+      //  this.estado = estado;
+    //}
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
+
+    //public void setUsuario(Usuario usuario) {
+      //  this.usuario = usuario;
+    //}
 
     // Constructor de conveniencia sin ID ni estado
     public SolicitudViaje(LocalDateTime fechaSalida,

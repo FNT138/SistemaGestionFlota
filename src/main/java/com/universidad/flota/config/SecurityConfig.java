@@ -1,37 +1,51 @@
 package com.universidad.flota.config;
 
-import org.springframework.context.annotation.*;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.*;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
 
+@Configuration
 @EnableWebSecurity
-public class SecurityConfig extends WebSecurityConfigurerAdapter{
+public class SecurityConfig {
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        // usuario en memoria para desarrollo
-        auth.inMemoryAuthentication()
-                .withUser("solicitante").password(passwordEncoder().encode("pass")).roles("SOLICITANTE")
-                .and()
-                .withUser("encargado").password(passwordEncoder().encode("pass")).roles("ENCARGADO");
-    }
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http
-            .csrf().disable() //para simplificar en dev
-            .authorizeRequests()
-                .antMatchers("/solicitante/**").hasRole("SOLICITANTE")
-                .antMatchers("/encargado/**").hasRole("ENCARGADO")
-                .anyRequest().authenticated()
-            .and()
-            .httpBasic(); //autenticacion basica HTTP
+    private final UserDetailsService userDetailsService;
+
+    public SecurityConfig(UserDetailsService userDetailsService) {
+        this.userDetailsService = userDetailsService;
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+                .csrf().disable() // Para simplificar en desarrollo
+                .headers().frameOptions().disable()
+                .and()
+                .authorizeHttpRequests(auth -> auth
+                        .antMatchers("/auth/**", "/h2-console/**").permitAll()
+                        .antMatchers("/solicitante/**").hasRole("SOLICITANTE")
+                        .antMatchers("/encargado/**").hasRole("ENCARGADO")
+                        .anyRequest().authenticated()
+                )
+                .httpBasic(); // Autenticación básica HTTP
+
+        return http.build();
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    // Bean para AuthenticationManager
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
+        return authConfig.getAuthenticationManager();
     }
 }
