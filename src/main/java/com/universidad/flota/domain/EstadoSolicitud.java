@@ -4,4 +4,5 @@ public enum EstadoSolicitud {
     APROBADO,
     RECHAZADO,
     ASIGNADA,
+    CERRADA
 }
