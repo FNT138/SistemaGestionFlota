@@ -1,27 +1,28 @@
 package com.universidad.flota.domain;
 
 import javax.persistence.*;
+        import lombok.*;
+        import java.time.LocalDateTime;
 
-
-import lombok.*;
-import java.time.LocalDateTime;
 @Entity
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 public class Aprobacion {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private LocalDateTime fecha;
+    //@JoinColumn(name = "solicitud_id")
+    @ManyToOne
+    private SolicitudViaje solicitud;
+
+    private String comentarios;
 
     @Enumerated(EnumType.STRING)
     private EstadoSolicitud estado;
 
-    @ManyToOne
-    @JoinColumn(name = "solicitud_id")
-    private SolicitudViaje solicitud;
+    private LocalDateTime fecha;
 }
