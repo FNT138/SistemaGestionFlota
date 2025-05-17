@@ -1,8 +1,10 @@
 package com.universidad.flota.controller;
 
 import com.universidad.flota.domain.SolicitudViaje;
+import com.universidad.flota.domain.Vehiculo;
 import com.universidad.flota.service.AprobacionService;
 import com.universidad.flota.repository.SolicitudViajeRepository;
+import com.universidad.flota.service.AsignacionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +23,8 @@ public class EncargadoController {
 
     @Autowired
     private AprobacionService aprobacionService;
+    @Autowired
+    private AsignacionService asignacionService;
 
     @PostMapping("/solicitudes/{id}/aprobar")
     public void aprobarSolicitud(@PathVariable Long id,
@@ -43,5 +47,11 @@ public class EncargadoController {
         } else {
             throw new RuntimeException("Solicitud no encontrada");
         }
+    }
+
+    @PostMapping("/solicitudes/{id}/asignar/{vid}")
+    public Vehiculo asignarVehiculo(@PathVariable Long sid,
+                                    @PathVariable Long vid) {
+        return asignacionService.asignarVehiculo(sid, vid);
     }
 }
