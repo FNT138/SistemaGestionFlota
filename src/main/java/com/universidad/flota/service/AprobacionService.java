@@ -1,8 +1,9 @@
 package com.universidad.flota.service;
 
 import com.universidad.flota.domain.Aprobacion;
+import com.universidad.flota.domain.SolicitudViaje;
 
 public interface AprobacionService {
-    Aprobacion aprobarSolicitud(Long solicitudId);
-    Aprobacion rechazarSolicitud(Long solicitud);
+    Aprobacion aprobar(SolicitudViaje solicitud,String comentario);
+    Aprobacion rechazar(SolicitudViaje solicitud,String comentario);
 }

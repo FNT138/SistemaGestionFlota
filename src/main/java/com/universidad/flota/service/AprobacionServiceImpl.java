@@ -1,7 +1,8 @@
 package com.universidad.flota.service;
 
 import com.universidad.flota.domain.*;
-import com.universidad.flota.repository.*;
+import com.universidad.flota.repository.AprobacionRepository;
+import com.universidad.flota.repository.SolicitudViajeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,35 +18,31 @@ public class AprobacionServiceImpl implements AprobacionService{
     private SolicitudViajeRepository solicitudRepo;
 
     @Override
-    public Aprobacion aprobarSolicitud(Long solicitudId){
-        SolicitudViaje solicitud = solicitudRepo.findById(solicitudId)
-                .orElseThrow(()-> new RuntimeException("Solicitud no encontrada"));
-
+    public void aprobar (SolicitudViaje solicitud, String comentarios){
         solicitud.setEstado(EstadoSolicitud.APROBADO);
         solicitudRepo.save(solicitud);
 
         Aprobacion aprobacion = Aprobacion.builder()
                 .solicitud(solicitud)
+                .comentarios(comentarios)
                 .estado(EstadoSolicitud.APROBADO)
                 .fecha(LocalDateTime.now())
                 .build();
-        return aprobacionRepo.save(aprobacion);
+        aprobacionRepo.save(aprobacion);
     }
 
     @Override
-    public Aprobacion rechazarSolicitud(Long solicitudId){
-        SolicitudViaje solicitud = solicitudRepo.findById(solicitudId)
-                .orElseThrow(()-> new RuntimeException("Solicitud no encontrada"));
-
+    public void rechazar(SolicitudViaje solicitud, String comentarios){
         solicitud.setEstado(EstadoSolicitud.RECHAZADO);
         solicitudRepo.save(solicitud);
 
         Aprobacion aprobacion = Aprobacion.builder()
                 .solicitud(solicitud)
+                .comentarios(comentarios)
                 .estado(EstadoSolicitud.RECHAZADO)
                 .fecha(LocalDateTime.now())
                 .build();
 
-        return aprobacionRepo.save(aprobacion);
+        aprobacionRepo.save(aprobacion);
     }
 }
