@@ -1,8 +1,8 @@
 package com.universidad.flota.domain;
 
 import javax.persistence.*;
-        import lombok.*;
-        import java.time.LocalDateTime;
+import lombok.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Data
