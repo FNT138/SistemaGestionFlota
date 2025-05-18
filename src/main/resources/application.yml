@@ -3,10 +3,11 @@ spring:
     # URL de conexión a PostgreSQL:
     # jdbc:postgresql://<host>:<puerto>/<nombre_bd>
     # En desarrollo local suele ser localhost:5432 con la BD flota_dev
-    url: ${JDBC_URL}
-    driver-class-name: org.postgresql.Driver
-    username: ${JDBC_USER}
-    password: ${JDBC_USER}
+    url: jdbc:postgresql://localhost:5432/flota_dev           # URL real :contentReference[oaicite:0]{index=0}
+    username: dev_user                                        # Usuario creado :contentReference[oaicite:1]{index=1}
+    password: dev_pass                                        # Contraseña definida :contentReference[oaicite:2]{index=2}
+    driver-class-name: org.postgresql.Driver                  # Driver oficial :contentReference[oaicite:3]{index=3}
+
     #Para H2
     #url: jdbc:h2:mem:flota;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
     #driverClassName: org.h2.Driver
