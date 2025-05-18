@@ -9,8 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
-import com.universidad.flota.dto.SolicitudViajeRequest;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -43,14 +41,6 @@ public class SolicitanteController {
 
         return solicitudService.crearSolicitud(sol);
     }
-
-    //por pruebas
-    /**@PostMapping("/solicitudes")
-    public SolicitudViaje crear(@RequestBody SolicitudViaje dto,
-                                @AuthenticationPrincipal Usuario user){
-        dto.setUsuario(user);
-        return solicitudService.crearSolicitud(dto);
-    }**/
 
     @GetMapping("/solicitudes")
     public List<SolicitudViajeResponse> listar(@AuthenticationPrincipal UserDetails userDetails){

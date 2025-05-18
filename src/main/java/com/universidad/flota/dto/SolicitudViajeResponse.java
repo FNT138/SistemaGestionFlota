@@ -5,7 +5,6 @@ import com.universidad.flota.domain.EstadoSolicitud;
 import com.universidad.flota.domain.Prioridad;
 import lombok.*;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 
