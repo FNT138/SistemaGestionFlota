@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Entity
@@ -38,17 +40,9 @@ public class SolicitudViaje {
     @Column(nullable = false)
     private EstadoSolicitud estado;
 
-    //public void setEstado(EstadoSolicitud estado) {
-      //  this.estado = estado;
-    //}
-
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
-
-    //public void setUsuario(Usuario usuario) {
-      //  this.usuario = usuario;
-    //}
 
     // Constructor de conveniencia sin ID ni estado
     public SolicitudViaje(LocalDateTime fechaSalida,
@@ -65,4 +59,14 @@ public class SolicitudViaje {
         this.usuario = usuario;
         this.estado = EstadoSolicitud.PENDIENTE;
     }
+
+    // en SolicitudViaje.java
+    @OneToMany(
+            mappedBy = "solicitud",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    @Builder.Default
+    private List<Aprobacion> aprobaciones = new ArrayList<>();
+
 }

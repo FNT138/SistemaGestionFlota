@@ -10,4 +10,5 @@ public interface SolicitudService {
     List<SolicitudViaje> listarPorUsuario(Usuario usuario);
     List<SolicitudViaje> listarPorEstado(EstadoSolicitud estado);
     SolicitudViaje actualizarEstado(Long solicitudID, EstadoSolicitud nuevoEstado);
+    SolicitudViaje findById(Long solicitudID);
 }

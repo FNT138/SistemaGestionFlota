@@ -9,12 +9,19 @@ import java.util.List;
 @Service
 
 public class SolicitudServiceImpl implements SolicitudService{
+
     @Autowired private SolicitudViajeRepository repo;
 
     @Override
     public SolicitudViaje crearSolicitud(SolicitudViaje solicitud){
         solicitud.setEstado(EstadoSolicitud.PENDIENTE);
         return repo.save(solicitud);
+    }
+
+    @Override
+    public SolicitudViaje findById(Long id){
+        return repo.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Solicitud no encontrada: " + id));
     }
 
     @Override

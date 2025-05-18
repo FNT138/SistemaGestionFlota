@@ -16,6 +16,12 @@ import java.util.stream.Collectors;
 public class EncargadoController {
 
     @Autowired
+    private SolicitudService solicitudeService;
+
+    @Autowired
+    private AprobacionService aprobarService;
+
+    @Autowired
     private SolicitudViajeRepository solicitudViajeRepo;
 
     @Autowired
@@ -62,26 +68,18 @@ public class EncargadoController {
     }
 
     @PostMapping("/solicitudes/{id}/aprobar")
-    public void aprobarSolicitud(@PathVariable Long id,
-                                 @RequestParam(required = false) String comentarios) {
+    public AprobacionResponse aprobarSolicitud(@PathVariable Long id,
+                                 @RequestBody ComentarioRequest req) {
 
-        Optional<SolicitudViaje> solicitudopt = solicitudViajeRepo.findById(id);
-        if (solicitudopt.isPresent()) {
-            aprobacionService.aprobar(solicitudopt.get(), comentarios);
-        } else {
-            throw new RuntimeException("Solicitud no encontrada");
-        }
+        Aprobacion aprobacion = aprobacionService.aprobar(solicitudService.findById(id), req.getComentarios());
+        return AprobacionResponse.fromEntity(aprobacion);
     }
 
     @PostMapping("/solicitudes/{id}/rechazar")
-    public void rechazarSolicitud(@PathVariable Long id,
-                                  @RequestParam(required = false) String comentarios) {
-        Optional<SolicitudViaje> solicitudopt = solicitudViajeRepo.findById(id);
-        if (solicitudopt.isPresent()) {
-            aprobacionService.rechazar(solicitudopt.get(), comentarios);
-        } else {
-            throw new RuntimeException("Solicitud no encontrada");
-        }
+    public AprobacionResponse rechazarSolicitud(@PathVariable Long id,@RequestBody ComentarioRequest req) {
+
+       Aprobacion aprobacion = aprobacionService.rechazar(solicitudService.findById(id), req.getComentarios());
+        return AprobacionResponse.fromEntity(aprobacion);
     }
 
     @PostMapping("/solicitudes/{sid}/asignar/{vid}")

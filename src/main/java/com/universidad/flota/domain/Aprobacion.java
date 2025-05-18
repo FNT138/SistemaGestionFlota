@@ -19,8 +19,10 @@ public class Aprobacion {
 
     //@JoinColumn(name = "solicitud_id")
     @ManyToOne
+    @JoinColumn(name = "solicitud_id",nullable = false)
     private SolicitudViaje solicitud;
 
+    @Column(name = "comentarios",nullable = false)
     private String comentarios;
 
     @Enumerated(EnumType.STRING)
