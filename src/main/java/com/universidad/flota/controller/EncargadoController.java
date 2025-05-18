@@ -1,12 +1,9 @@
 package com.universidad.flota.controller;
 
-import com.universidad.flota.domain.SolicitudViaje;
-import com.universidad.flota.domain.Vehiculo;
-import com.universidad.flota.domain.Viaje;
-import com.universidad.flota.service.AprobacionService;
-import com.universidad.flota.repository.SolicitudViajeRepository;
-import com.universidad.flota.service.AsignacionService;
-import com.universidad.flota.service.ViajeService;
+import com.universidad.flota.domain.*;
+import com.universidad.flota.repository.*;
+import com.universidad.flota.service.*;
+import com.universidad.flota.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +29,13 @@ public class EncargadoController {
 
     @Autowired
     private ViajeService viajeService;
+
+    @Autowired
+    private MantenimientoService mantenimientoService;
+
+    @Autowired
+    private VehiculoRepository vehiculoRepo;
+
 
     @PostMapping("/solicitudes/{id}/aprobar")
     public void aprobarSolicitud(@PathVariable Long id,
@@ -73,4 +77,26 @@ public class EncargadoController {
         return viajeService.registrarViaje(sid, kmInicio,kmFin, combustibleInicio, combustibleFin);
 
     }
+
+    @PostMapping("/vehiculos/{vid}/mantenimiento")
+    public Mantenimiento registrarMantenimiento(@PathVariable("vid") Long vid,
+                                                @RequestBody MantenimientoRequest dto){
+
+        if (!vid.equals(dto.getVehiculoId())){
+            throw new IllegalArgumentException("El ID del vehiculo en la ruta y el body no coinciden");
+        }
+
+        //crear la entidad a partir del DTO
+        Mantenimiento mant = Mantenimiento.builder()
+                .vehiculo(vehiculoRepo.findById(dto.getVehiculoId())
+                        .orElseThrow(() -> new RuntimeException("Vehículo no encontrado")))
+                .fecha(dto.getFecha())
+                .tipoSerivicio(dto.getTipoServicio())
+                .km(dto.getKm())
+                .facturaAdjunta(dto.getFacturaAdjunta())
+                .build();
+
+        return mantenimientoService.registrar(mant);
+    }
+
 }
