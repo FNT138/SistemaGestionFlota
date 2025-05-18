@@ -5,13 +5,8 @@ import com.universidad.flota.repository.*;
 import com.universidad.flota.service.*;
 import com.universidad.flota.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
-import java.awt.*;
 import java.util.Optional;
 
 @RestController
@@ -63,7 +58,7 @@ public class EncargadoController {
         }
     }
 
-    @PostMapping("/solicitudes/{id}/asignar/{vid}")
+    @PostMapping("/solicitudes/{sid}/asignar/{vid}")
     public Vehiculo asignarVehiculo(@PathVariable Long sid,
                                     @PathVariable Long vid) {
         return asignacionService.asignarVehiculo(sid, vid);
@@ -111,7 +106,8 @@ public class EncargadoController {
 
         //crear la entidad a partir del DTO
         Incidente inc = Incidente.builder()
-                .vehiculo(vehiculoRepo.findById(vid).get())
+                .vehiculo(vehiculoRepo.findById(vid)
+                        .orElseThrow(RuntimeException::new))
                 .fecha(dto.getFecha())
                 .descripcion(dto.getDescripcion())
                 .partePolicial(dto.getPartePolicial())

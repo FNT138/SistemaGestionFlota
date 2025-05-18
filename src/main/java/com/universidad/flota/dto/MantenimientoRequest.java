@@ -1,6 +1,5 @@
 package com.universidad.flota.dto;
 
-import com.universidad.flota.domain.EstadoVehiculo;
 import lombok.*;
 import java.time.LocalDateTime;
 
