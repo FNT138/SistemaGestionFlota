@@ -1,6 +1,8 @@
 package com.universidad.flota.domain;
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import java.time.LocalDateTime;
 
@@ -24,7 +26,10 @@ public class Viaje {
     private Double combustibleInicio;
     private Double combustibleFin;
 
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime fechaInicio;
+
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime fechaFin;
 
 }

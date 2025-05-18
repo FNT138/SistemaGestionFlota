@@ -1,5 +1,6 @@
 package com.universidad.flota.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import java.time.LocalDateTime;
 
@@ -13,7 +14,10 @@ import java.time.LocalDateTime;
 @Builder
 public class MantenimientoRequest {
     private Long vehiculoId;
+
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime fecha;
+
     private String tipoServicio;
     private Double km;
     private String facturaAdjunta;

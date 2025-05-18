@@ -26,4 +26,12 @@ spring:
       enabled: true
       path: /h2-console
 
+  jackson:
+    serialization:
+      WRITE_DATES_AS_TIMESTAMPS: false
+
+logging:
+  level:
+    org.springframework.http.converter.json: DEBUG
+    com.fasterxml.jackson.databind: DEBUG
 

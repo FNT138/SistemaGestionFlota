@@ -1,6 +1,8 @@
 package com.universidad.flota.domain;
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -19,7 +21,9 @@ public class Incidente {
     @ManyToOne
     private Vehiculo vehiculo;
 
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime fecha;
+
     private String descripcion;
     private String partePolicial;
 

@@ -1,5 +1,6 @@
 package com.universidad.flota.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -21,6 +22,7 @@ public class SolicitudViaje {
     @Column(nullable = false)
     private LocalDateTime fechaSalida;
 
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     @Column(nullable = false)
     private LocalDateTime fechaRegreso;
 

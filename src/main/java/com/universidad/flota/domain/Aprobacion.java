@@ -1,6 +1,8 @@
 package com.universidad.flota.domain;
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import java.time.LocalDateTime;
 
@@ -24,5 +26,6 @@ public class Aprobacion {
     @Enumerated(EnumType.STRING)
     private EstadoSolicitud estado;
 
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime fecha;
 }
