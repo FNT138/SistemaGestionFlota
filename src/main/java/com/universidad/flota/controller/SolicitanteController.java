@@ -2,6 +2,7 @@ package com.universidad.flota.controller;
 
 import com.universidad.flota.domain.*;
 import com.universidad.flota.dto.SolicitudViajeRequest;
+import com.universidad.flota.dto.SolicitudViajeResponse;
 import com.universidad.flota.service.SolicitudService;
 import com.universidad.flota.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import com.universidad.flota.dto.SolicitudViajeRequest;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @RestController
@@ -51,8 +53,23 @@ public class SolicitanteController {
     }**/
 
     @GetMapping("/solicitudes")
-    public List<SolicitudViaje> listar(@AuthenticationPrincipal UserDetails userDetails){
+    public List<SolicitudViajeResponse> listar(@AuthenticationPrincipal UserDetails userDetails){
         Usuario usuario = usuarioService.findByEmail(userDetails.getUsername());
-        return solicitudService.listarPorUsuario(usuario);
+        List<SolicitudViaje> lista = solicitudService.listarPorUsuario(usuario);
+
+        return lista.stream()
+                .map(sol -> SolicitudViajeResponse.builder()
+                        .id(sol.getId())
+                        .fechaSalida(sol.getFechaSalida())
+                        .fechaRegreso(sol.getFechaRegreso())
+                        .destino(sol.getDestino())
+                        .motivo(sol.getMotivo())
+                        .prioridad(sol.getPrioridad())
+                        .estado(sol.getEstado())
+                        .usuarioId(sol.getUsuario().getId())
+                        .usuarioEmail(sol.getUsuario().getEmail())
+                        .build()
+                )
+                .collect(Collectors.toList());
     }
 }
