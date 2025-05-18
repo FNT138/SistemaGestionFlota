@@ -30,7 +30,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .antMatchers("/auth/**", "/h2-console/**").permitAll()
                         .antMatchers("/solicitante/**").hasRole("SOLICITANTE")
-                        .antMatchers("/encargado/**").hasRole("ENCARGADO")
+                        .antMatchers("/encargado/**", "/vehiculos/**").hasRole("ENCARGADO")
                         .anyRequest().authenticated()
                 )
                 .httpBasic(); // Autenticación básica HTTP
