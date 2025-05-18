@@ -51,7 +51,8 @@ public class SolicitanteController {
     }**/
 
     @GetMapping("/solicitudes")
-    public List<SolicitudViaje> listar(@AuthenticationPrincipal Usuario user){
-        return solicitudService.listarPorUsuario(user);
+    public List<SolicitudViaje> listar(@AuthenticationPrincipal UserDetails userDetails){
+        Usuario usuario = usuarioService.findByEmail(userDetails.getUsername());
+        return solicitudService.listarPorUsuario(usuario);
     }
 }

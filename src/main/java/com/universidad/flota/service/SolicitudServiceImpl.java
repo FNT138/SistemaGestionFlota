@@ -19,7 +19,8 @@ public class SolicitudServiceImpl implements SolicitudService{
 
     @Override
     public List<SolicitudViaje> listarPorUsuario(Usuario usuario) {
-        return repo.findByUsuario(usuario);
+
+        return repo.findByUsuarioId(usuario.getId());
     }
 
     @Override
