@@ -7,7 +7,9 @@ import com.universidad.flota.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/encargado")
@@ -33,6 +35,9 @@ public class EncargadoController {
 
     @Autowired
     private VehiculoRepository vehiculoRepo;
+
+    @Autowired
+    private SolicitudService solicitudService;
 
 
     @PostMapping("/solicitudes/{id}/aprobar")
@@ -115,6 +120,27 @@ public class EncargadoController {
                 .build();
 
         return incidenteService.registrar(inc);
+    }
+    @GetMapping("/solicitudes/pendientes/")
+    public List<SolicitudViajeResponse> verSolicitudesPendientes(){
+        List<SolicitudViaje> pendientes = solicitudService.listarPorEstado(EstadoSolicitud.PENDIENTE);
+
+
+        return pendientes.stream()
+                .map(sol -> SolicitudViajeResponse.builder()
+                        .id(sol.getId())
+                        .fechaSalida(sol.getFechaSalida())
+                        .fechaRegreso(sol.getFechaRegreso())
+                        .destino(sol.getDestino())
+                        .motivo(sol.getMotivo())
+                        .prioridad(sol.getPrioridad())
+                        .estado(sol.getEstado())
+                        .usuarioId(sol.getUsuario().getId())
+                        .usuarioEmail(sol.getUsuario().getEmail())
+                        .build()
+                )
+                .collect(Collectors.toList());
+
     }
 
 }
