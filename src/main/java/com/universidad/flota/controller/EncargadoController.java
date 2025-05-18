@@ -39,6 +39,27 @@ public class EncargadoController {
     @Autowired
     private SolicitudService solicitudService;
 
+    @GetMapping("/solicitudes/pendientes")
+    public List<SolicitudViajeResponse> verSolicitudesPendientes(){
+        List<SolicitudViaje> pendientes = solicitudService.listarPorEstado(EstadoSolicitud.PENDIENTE);
+
+
+        return pendientes.stream()
+                .map(sol -> SolicitudViajeResponse.builder()
+                        .id(sol.getId())
+                        .fechaSalida(sol.getFechaSalida())
+                        .fechaRegreso(sol.getFechaRegreso())
+                        .destino(sol.getDestino())
+                        .motivo(sol.getMotivo())
+                        .prioridad(sol.getPrioridad())
+                        .estado(sol.getEstado())
+                        .usuarioId(sol.getUsuario().getId())
+                        .usuarioEmail(sol.getUsuario().getEmail())
+                        .build()
+                )
+                .collect(Collectors.toList());
+
+    }
 
     @PostMapping("/solicitudes/{id}/aprobar")
     public void aprobarSolicitud(@PathVariable Long id,
@@ -121,26 +142,6 @@ public class EncargadoController {
 
         return incidenteService.registrar(inc);
     }
-    @GetMapping("/solicitudes/pendientes/")
-    public List<SolicitudViajeResponse> verSolicitudesPendientes(){
-        List<SolicitudViaje> pendientes = solicitudService.listarPorEstado(EstadoSolicitud.PENDIENTE);
 
-
-        return pendientes.stream()
-                .map(sol -> SolicitudViajeResponse.builder()
-                        .id(sol.getId())
-                        .fechaSalida(sol.getFechaSalida())
-                        .fechaRegreso(sol.getFechaRegreso())
-                        .destino(sol.getDestino())
-                        .motivo(sol.getMotivo())
-                        .prioridad(sol.getPrioridad())
-                        .estado(sol.getEstado())
-                        .usuarioId(sol.getUsuario().getId())
-                        .usuarioEmail(sol.getUsuario().getEmail())
-                        .build()
-                )
-                .collect(Collectors.toList());
-
-    }
 
 }
