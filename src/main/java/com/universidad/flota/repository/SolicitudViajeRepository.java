@@ -1,7 +1,6 @@
 package com.universidad.flota.repository;
 
 import com.universidad.flota.domain.SolicitudViaje;
-import com.universidad.flota.domain.Usuario;
 import com.universidad.flota.domain.EstadoSolicitud;
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
