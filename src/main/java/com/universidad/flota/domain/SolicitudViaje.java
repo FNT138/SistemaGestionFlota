@@ -8,11 +8,9 @@ import java.time.LocalDateTime;
 @Data
 @Entity
 @Table(name = "solicitudes_viaje")
-
-@Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class SolicitudViaje {
 
     @Id
