@@ -5,25 +5,14 @@ import com.universidad.flota.repository.*;
 import com.universidad.flota.service.*;
 import com.universidad.flota.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/encargado")
 public class EncargadoController {
-
-    @Autowired
-    private SolicitudService solicitudeService;
-
-    @Autowired
-    private AprobacionService aprobarService;
-
-    @Autowired
-    private SolicitudViajeRepository solicitudViajeRepo;
 
     @Autowired
     private AprobacionService aprobacionService;
@@ -33,9 +22,6 @@ public class EncargadoController {
 
     @Autowired
     private ViajeService viajeService;
-
-    @Autowired
-    private MantenimientoService mantenimientoService;
 
     @Autowired
     private IncidenteService incidenteService;
@@ -49,7 +35,6 @@ public class EncargadoController {
     @GetMapping("/solicitudes/pendientes")
     public List<SolicitudViajeResponse> verSolicitudesPendientes(){
         List<SolicitudViaje> pendientes = solicitudService.listarPorEstado(EstadoSolicitud.PENDIENTE);
-
 
         return pendientes.stream()
                 .map(sol -> SolicitudViajeResponse.builder()

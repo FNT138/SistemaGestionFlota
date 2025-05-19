@@ -3,7 +3,6 @@ package com.universidad.flota.service;
 import com.universidad.flota.domain.Mantenimiento;
 import com.universidad.flota.domain.Vehiculo;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public interface MantenimientoService {

@@ -1,9 +1,7 @@
 package com.universidad.flota.dto;
 
-import javax.validation.constraints.*;
 import lombok.*;
 import java.time.LocalDateTime;
-
 
 /**
  * DTO para reservar un mantenimiento de vehículo.

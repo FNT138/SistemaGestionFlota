@@ -291,10 +291,12 @@ SELECT version();
    En pgAdmin o en psql, creá un rol y base de datos específicos:
 
 ````sql
+
 -- En psql o Query Tool
 CREATE ROLE dev_user WITH LOGIN PASSWORD 'dev_pass';
 CREATE DATABASE flota_dev OWNER dev_user;
 --Concedé privilegios:
 GRANT ALL PRIVILEGES ON DATABASE flota_dev TO dev_user;
+                                 
 ````
 

@@ -5,8 +5,6 @@ import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import java.time.LocalDateTime;
-import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -41,8 +39,8 @@ public class Mantenimiento {
     @Column
     private String facturaAdjunta;
 
-    /**@Column(nullable = false)
-    private Double km;**/
+    //@Column(nullable = false)
+    //private Double km;
 
 
 
