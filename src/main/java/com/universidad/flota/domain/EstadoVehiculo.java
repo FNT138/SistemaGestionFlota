@@ -3,5 +3,6 @@ package com.universidad.flota.domain;
 public enum EstadoVehiculo {
     DISPONIBLE,
     ASIGNADO,
-    MANTENIMIENTO
+    MANTENIMIENTO,
+    FUERA_SERVICIO
 }

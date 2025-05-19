@@ -100,26 +100,6 @@ public class EncargadoController {
         return viajeService.registrarViaje(sid, kmInicio, kmFin, combustibleInicio, combustibleFin);
     }
 
-    @PostMapping("/vehiculos/{vid}/mantenimiento")
-    public Mantenimiento registrarMantenimiento(@PathVariable("vid") Long vid,
-                                                @RequestBody MantenimientoRequest dto){
-
-        if (!vid.equals(dto.getVehiculoId())){
-            throw new IllegalArgumentException("El ID del vehiculo en la ruta y el body no coinciden");
-        }
-
-        //crear la entidad a partir del DTO
-        Mantenimiento mant = Mantenimiento.builder()
-                .vehiculo(vehiculoRepo.findById(dto.getVehiculoId())
-                        .orElseThrow(() -> new RuntimeException("Vehículo no encontrado")))
-                .fecha(dto.getFecha())
-                .tipoSerivicio(dto.getTipoServicio())
-                .km(dto.getKm())
-                .facturaAdjunta(dto.getFacturaAdjunta())
-                .build();
-
-        return mantenimientoService.registrar(mant);
-    }
 
     @PostMapping("/vehiculos/{vid}/incidente")
     public Incidente registrarIncidente(@PathVariable("vid") Long vid,
