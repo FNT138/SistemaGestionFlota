@@ -5,6 +5,7 @@ import com.universidad.flota.repository.*;
 import com.universidad.flota.service.*;
 import com.universidad.flota.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -89,15 +90,14 @@ public class EncargadoController {
     }
 
     @PostMapping("/solicitudes/{sid}/viaje")
-    public Viaje registrarViaje(
-            @PathVariable Long sid,
+    public ViajeDTO registrarViaje(
+            @PathVariable("sid") Long sid,
             @RequestParam Double kmInicio,
             @RequestParam Double kmFin,
             @RequestParam Double combustibleInicio,
             @RequestParam Double combustibleFin){
 
-        return viajeService.registrarViaje(sid, kmInicio,kmFin, combustibleInicio, combustibleFin);
-
+        return viajeService.registrarViaje(sid, kmInicio, kmFin, combustibleInicio, combustibleFin);
     }
 
     @PostMapping("/vehiculos/{vid}/mantenimiento")
