@@ -3,8 +3,11 @@ package com.universidad.flota.dto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.universidad.flota.domain.EstadoSolicitud;
 import com.universidad.flota.domain.Prioridad;
+import com.universidad.flota.domain.Vehiculo;
 import lombok.*;
 
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import java.time.LocalDateTime;
 
 

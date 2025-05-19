@@ -44,6 +44,10 @@ public class SolicitudViaje {
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name ="vehiculo_id")
+    private Vehiculo vehiculo;
+
     // Constructor de conveniencia sin ID ni estado
     public SolicitudViaje(LocalDateTime fechaSalida,
                           LocalDateTime fechaRegreso,

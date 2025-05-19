@@ -13,6 +13,8 @@ public class AsignacionServiceImpl implements AsignacionService {
 
     @Autowired
     private VehiculoRepository vehiculoRepo;
+    @Autowired
+    private SolicitudViajeRepository solicitudViajeRepository;
 
     @Override
     public Vehiculo asignarVehiculo(Long solicitudId, Long vehiculoId) {
@@ -31,8 +33,10 @@ public class AsignacionServiceImpl implements AsignacionService {
         }
 
         //asignar
+        solicitud.setVehiculo(vehiculo);
         solicitud.setEstado(EstadoSolicitud.ASIGNADA);
         solicitudRepo.save(solicitud);
+
 
         vehiculo.setEstado(EstadoVehiculo.ASIGNADO);
         return vehiculoRepo.save(vehiculo);

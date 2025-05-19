@@ -15,6 +15,8 @@ import java.time.LocalDateTime;
 public class ViajeServiceImpl implements ViajeService{
 
     @Autowired
+    private VehiculoRepository vehiculoRepo;
+    @Autowired
     private ViajeRepository viajeRepo;
 
     @Autowired
@@ -41,6 +43,11 @@ public class ViajeServiceImpl implements ViajeService{
         sol.setEstado(EstadoSolicitud.CERRADA);
         solicitudRepo.save(sol);
 
+        Vehiculo veh = sol.getVehiculo();
+        if(veh != null){
+            veh.setEstado(EstadoVehiculo.DISPONIBLE);
+            vehiculoRepo.save(veh);
+        }
 
 
         return new ViajeDTO(
