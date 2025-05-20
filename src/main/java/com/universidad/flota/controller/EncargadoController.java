@@ -85,26 +85,4 @@ public class EncargadoController {
         return viajeService.registrarViaje(sid, kmInicio, kmFin, combustibleInicio, combustibleFin);
     }
 
-
-    @PostMapping("/vehiculos/{vid}/incidente")
-    public Incidente registrarIncidente(@PathVariable("vid") Long vid,
-                                                @RequestBody IncidenteRequest dto){
-
-        if (!vid.equals(dto.getVehiculoId())) throw new IllegalArgumentException();
-
-
-        //crear la entidad a partir del DTO
-        Incidente inc = Incidente.builder()
-                .vehiculo(vehiculoRepo.findById(vid)
-                        .orElseThrow(RuntimeException::new))
-                .fecha(dto.getFecha())
-                .descripcion(dto.getDescripcion())
-                .partePolicial(dto.getPartePolicial())
-                .fotos(dto.getFotos())
-                .build();
-
-        return incidenteService.registrar(inc);
-    }
-
-
 }
