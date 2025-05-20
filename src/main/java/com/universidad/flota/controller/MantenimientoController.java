@@ -1,11 +1,9 @@
 package com.universidad.flota.controller;
 
 import com.universidad.flota.domain.Mantenimiento;
-import com.universidad.flota.domain.Vehiculo;
 import com.universidad.flota.dto.*;
 import com.universidad.flota.mapper.MantenimientoMapper;
 import com.universidad.flota.service.MantenimientoService;
-import net.bytebuddy.build.Plugin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
