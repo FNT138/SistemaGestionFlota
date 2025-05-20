@@ -11,9 +11,9 @@ public interface MantenimientoService {
                            LocalDateTime fechaProgramada,
                            String tipoServicio);
 
-    Mantenimiento iniciar (Long id);
+    Mantenimiento iniciar (Long mid);
 
-    Mantenimiento cerrar(Long id, String factura);
+    Mantenimiento cerrar(Long mid,String factura);
 
     Vehiculo marcarFueraDeServicio(Long vehiculoId);
 

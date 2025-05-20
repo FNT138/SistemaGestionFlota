@@ -23,11 +23,11 @@ public class Mantenimiento {
     private Vehiculo vehiculo;
 
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    @Column(nullable = false)
+    @Column( name = "fecha", nullable = false)
     private LocalDateTime fechaProgramada;
 
     @Column(nullable = false, length = 200)
-    private String tipoSerivicio;
+    private String tipoServicio;
 
     //Nulos hasta que el vehiculo vuelve a estar disponible
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")

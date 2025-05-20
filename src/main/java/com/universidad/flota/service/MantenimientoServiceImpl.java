@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.NoSuchElementException;
 
 @Service
 public class MantenimientoServiceImpl implements MantenimientoService {
@@ -33,11 +34,14 @@ public class MantenimientoServiceImpl implements MantenimientoService {
         Vehiculo v = vehiculoRepo.findById(vehiculoId)
                 .orElseThrow(() -> new RuntimeException("Vehiculo no encontrado"));
 
-        var m = Mantenimiento.builder()
+        Mantenimiento m = Mantenimiento.builder()
                 .vehiculo(v)
                 .fechaProgramada(fechaProgramada)
-                .tipoSerivicio(tipoServicio)
+                .tipoServicio(tipoServicio)
                 .build();
+
+        v.setEstado(EstadoVehiculo.MANTENIMIENTO);
+        vehiculoRepo.save(v);
         return mantenimientoRepo.save(m);
     }
 
@@ -52,10 +56,6 @@ public class MantenimientoServiceImpl implements MantenimientoService {
         }
 
         m.setFechaInicioReal(LocalDateTime.now());
-
-        Vehiculo v = m.getVehiculo();
-        v.setEstado(EstadoVehiculo.MANTENIMIENTO);
-        vehiculoRepo.save(v);
         return mantenimientoRepo.save(m);
     }
 
@@ -83,7 +83,7 @@ public class MantenimientoServiceImpl implements MantenimientoService {
     @Transactional
     public Vehiculo marcarFueraDeServicio(Long vid){
         Vehiculo v = vehiculoRepo.findById(vid)
-                .orElseThrow(() -> new RuntimeException("Vehiculo no encontrado"));
+                .orElseThrow(() -> new NoSuchElementException("Vehiculo no encontrado"));
 
         v.setEstado(EstadoVehiculo.FUERA_SERVICIO);
         return vehiculoRepo.save(v);
